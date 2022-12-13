@@ -1,0 +1,321 @@
+
+-- --------------------------------------------------
+-- Entity Designer DDL Script for SQL Server Compact Edition
+-- --------------------------------------------------
+-- Date Created: 09/01/2019 11:14:18
+-- Generated from EDMX file: C:\Users\Home\Desktop\ИС ресторан\Проект VS2012\Restaurant\Data\Model.edmx
+-- --------------------------------------------------
+
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- NOTE: if the constraint does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    ALTER TABLE [Dish] DROP CONSTRAINT [FK_DISH_REFERENCE_TYPEDISH];
+GO
+    ALTER TABLE [DishIngredient] DROP CONSTRAINT [FK_DISHINGR_REFERENCE_DISH];
+GO
+    ALTER TABLE [DishIngredient] DROP CONSTRAINT [FK_DISHINGR_REFERENCE_INGREDIE];
+GO
+    ALTER TABLE [DishIngredient] DROP CONSTRAINT [FK_DISHINGR_REFERENCE_UNITS];
+GO
+    ALTER TABLE [Employee] DROP CONSTRAINT [FK_EMPLOYEE_REFERENCE_POST];
+GO
+    ALTER TABLE [Order] DROP CONSTRAINT [FK_ORDER_REFERENCE_EMPLOYEE];
+GO
+    ALTER TABLE [OrderDish] DROP CONSTRAINT [FK_ORDERDIS_REFERENCE_DISH];
+GO
+    ALTER TABLE [OrderDish] DROP CONSTRAINT [FK_ORDERDIS_REFERENCE_ORDER];
+GO
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- NOTE: if the table does not exist, an ignorable error will be reported.
+-- --------------------------------------------------
+
+    DROP TABLE [Dish];
+GO
+    DROP TABLE [DishIngredient];
+GO
+    DROP TABLE [Employee];
+GO
+    DROP TABLE [Ingredient];
+GO
+    DROP TABLE [Order];
+GO
+    DROP TABLE [OrderDish];
+GO
+    DROP TABLE [Post];
+GO
+    DROP TABLE [TypeDish];
+GO
+    DROP TABLE [Units];
+GO
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+
+-- Creating table 'Dishes'
+CREATE TABLE [Dishes] (
+    [ID_Dish] int IDENTITY(1,1) NOT NULL,
+    [ID_TypeDish] int  NOT NULL,
+    [DishName] nvarchar(150)  NOT NULL,
+    [Price] decimal(19,4)  NOT NULL,
+    [Photo] image  NOT NULL,
+    [Detail] nvarchar(2500)  NULL
+);
+GO
+
+-- Creating table 'DishIngredients'
+CREATE TABLE [DishIngredients] (
+    [ID_IngridientDish] int IDENTITY(1,1) NOT NULL,
+    [Dish_ID] int  NOT NULL,
+    [Ingridient_ID] int  NOT NULL,
+    [ID_Unit] int  NOT NULL,
+    [Quantity] float  NOT NULL
+);
+GO
+
+-- Creating table 'Employees'
+CREATE TABLE [Employees] (
+    [ID_Employee] int IDENTITY(1,1) NOT NULL,
+    [ID_post] int  NOT NULL,
+    [FName] nvarchar(150)  NOT NULL,
+    [EmpName] nvarchar(150)  NOT NULL,
+    [LName] nvarchar(150)  NOT NULL,
+    [Phone] nvarchar(20)  NOT NULL,
+    [Birthdate] datetime  NOT NULL,
+    [Photo] image  NOT NULL,
+    [DateEmployment] datetime  NOT NULL,
+    [Address] nvarchar(500)  NOT NULL
+);
+GO
+
+-- Creating table 'Ingredients'
+CREATE TABLE [Ingredients] (
+    [ID_Ingredient] int IDENTITY(1,1) NOT NULL,
+    [IngridientName] nvarchar(250)  NOT NULL
+);
+GO
+
+-- Creating table 'Orders'
+CREATE TABLE [Orders] (
+    [ID_Order] int IDENTITY(1,1) NOT NULL,
+    [ID_Employee] int  NOT NULL,
+    [Date] datetime  NOT NULL,
+    [Remarks] nvarchar(2500)  NULL
+);
+GO
+
+-- Creating table 'OrderDishes'
+CREATE TABLE [OrderDishes] (
+    [ID_OrderDish] int IDENTITY(1,1) NOT NULL,
+    [Dish_ID] int  NOT NULL,
+    [ID_Order] int  NOT NULL,
+    [Quantity] int  NOT NULL
+);
+GO
+
+-- Creating table 'Posts'
+CREATE TABLE [Posts] (
+    [ID_post] int IDENTITY(1,1) NOT NULL,
+    [PostName] nvarchar(150)  NOT NULL,
+    [Salary] decimal(19,4)  NOT NULL,
+    [SalePercent] int  NOT NULL
+);
+GO
+
+-- Creating table 'TypeDishes'
+CREATE TABLE [TypeDishes] (
+    [ID_TypeDish] int IDENTITY(1,1) NOT NULL,
+    [TypeDishName] nvarchar(250)  NOT NULL,
+    [Detailed] nvarchar(2500)  NULL
+);
+GO
+
+-- Creating table 'Units'
+CREATE TABLE [Units] (
+    [ID_Unit] int IDENTITY(1,1) NOT NULL,
+    [UnitName] nvarchar(100)  NOT NULL
+);
+GO
+
+-- --------------------------------------------------
+-- Creating all PRIMARY KEY constraints
+-- --------------------------------------------------
+
+-- Creating primary key on [ID_Dish] in table 'Dishes'
+ALTER TABLE [Dishes]
+ADD CONSTRAINT [PK_Dishes]
+    PRIMARY KEY ([ID_Dish] );
+GO
+
+-- Creating primary key on [ID_IngridientDish] in table 'DishIngredients'
+ALTER TABLE [DishIngredients]
+ADD CONSTRAINT [PK_DishIngredients]
+    PRIMARY KEY ([ID_IngridientDish] );
+GO
+
+-- Creating primary key on [ID_Employee] in table 'Employees'
+ALTER TABLE [Employees]
+ADD CONSTRAINT [PK_Employees]
+    PRIMARY KEY ([ID_Employee] );
+GO
+
+-- Creating primary key on [ID_Ingredient] in table 'Ingredients'
+ALTER TABLE [Ingredients]
+ADD CONSTRAINT [PK_Ingredients]
+    PRIMARY KEY ([ID_Ingredient] );
+GO
+
+-- Creating primary key on [ID_Order] in table 'Orders'
+ALTER TABLE [Orders]
+ADD CONSTRAINT [PK_Orders]
+    PRIMARY KEY ([ID_Order] );
+GO
+
+-- Creating primary key on [ID_OrderDish] in table 'OrderDishes'
+ALTER TABLE [OrderDishes]
+ADD CONSTRAINT [PK_OrderDishes]
+    PRIMARY KEY ([ID_OrderDish] );
+GO
+
+-- Creating primary key on [ID_post] in table 'Posts'
+ALTER TABLE [Posts]
+ADD CONSTRAINT [PK_Posts]
+    PRIMARY KEY ([ID_post] );
+GO
+
+-- Creating primary key on [ID_TypeDish] in table 'TypeDishes'
+ALTER TABLE [TypeDishes]
+ADD CONSTRAINT [PK_TypeDishes]
+    PRIMARY KEY ([ID_TypeDish] );
+GO
+
+-- Creating primary key on [ID_Unit] in table 'Units'
+ALTER TABLE [Units]
+ADD CONSTRAINT [PK_Units]
+    PRIMARY KEY ([ID_Unit] );
+GO
+
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+-- Creating foreign key on [ID_TypeDish] in table 'Dishes'
+ALTER TABLE [Dishes]
+ADD CONSTRAINT [FK_DISH_REFERENCE_TYPEDISH]
+    FOREIGN KEY ([ID_TypeDish])
+    REFERENCES [TypeDishes]
+        ([ID_TypeDish])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DISH_REFERENCE_TYPEDISH'
+CREATE INDEX [IX_FK_DISH_REFERENCE_TYPEDISH]
+ON [Dishes]
+    ([ID_TypeDish]);
+GO
+
+-- Creating foreign key on [Dish_ID] in table 'DishIngredients'
+ALTER TABLE [DishIngredients]
+ADD CONSTRAINT [FK_DISHINGR_REFERENCE_DISH]
+    FOREIGN KEY ([Dish_ID])
+    REFERENCES [Dishes]
+        ([ID_Dish])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DISHINGR_REFERENCE_DISH'
+CREATE INDEX [IX_FK_DISHINGR_REFERENCE_DISH]
+ON [DishIngredients]
+    ([Dish_ID]);
+GO
+
+-- Creating foreign key on [Dish_ID] in table 'OrderDishes'
+ALTER TABLE [OrderDishes]
+ADD CONSTRAINT [FK_ORDERDIS_REFERENCE_DISH]
+    FOREIGN KEY ([Dish_ID])
+    REFERENCES [Dishes]
+        ([ID_Dish])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ORDERDIS_REFERENCE_DISH'
+CREATE INDEX [IX_FK_ORDERDIS_REFERENCE_DISH]
+ON [OrderDishes]
+    ([Dish_ID]);
+GO
+
+-- Creating foreign key on [Ingridient_ID] in table 'DishIngredients'
+ALTER TABLE [DishIngredients]
+ADD CONSTRAINT [FK_DISHINGR_REFERENCE_INGREDIE]
+    FOREIGN KEY ([Ingridient_ID])
+    REFERENCES [Ingredients]
+        ([ID_Ingredient])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DISHINGR_REFERENCE_INGREDIE'
+CREATE INDEX [IX_FK_DISHINGR_REFERENCE_INGREDIE]
+ON [DishIngredients]
+    ([Ingridient_ID]);
+GO
+
+-- Creating foreign key on [ID_Unit] in table 'DishIngredients'
+ALTER TABLE [DishIngredients]
+ADD CONSTRAINT [FK_DISHINGR_REFERENCE_UNITS]
+    FOREIGN KEY ([ID_Unit])
+    REFERENCES [Units]
+        ([ID_Unit])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_DISHINGR_REFERENCE_UNITS'
+CREATE INDEX [IX_FK_DISHINGR_REFERENCE_UNITS]
+ON [DishIngredients]
+    ([ID_Unit]);
+GO
+
+-- Creating foreign key on [ID_post] in table 'Employees'
+ALTER TABLE [Employees]
+ADD CONSTRAINT [FK_EMPLOYEE_REFERENCE_POST]
+    FOREIGN KEY ([ID_post])
+    REFERENCES [Posts]
+        ([ID_post])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EMPLOYEE_REFERENCE_POST'
+CREATE INDEX [IX_FK_EMPLOYEE_REFERENCE_POST]
+ON [Employees]
+    ([ID_post]);
+GO
+
+-- Creating foreign key on [ID_Employee] in table 'Orders'
+ALTER TABLE [Orders]
+ADD CONSTRAINT [FK_ORDER_REFERENCE_EMPLOYEE]
+    FOREIGN KEY ([ID_Employee])
+    REFERENCES [Employees]
+        ([ID_Employee])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ORDER_REFERENCE_EMPLOYEE'
+CREATE INDEX [IX_FK_ORDER_REFERENCE_EMPLOYEE]
+ON [Orders]
+    ([ID_Employee]);
+GO
+
+-- Creating foreign key on [ID_Order] in table 'OrderDishes'
+ALTER TABLE [OrderDishes]
+ADD CONSTRAINT [FK_ORDERDIS_REFERENCE_ORDER]
+    FOREIGN KEY ([ID_Order])
+    REFERENCES [Orders]
+        ([ID_Order])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ORDERDIS_REFERENCE_ORDER'
+CREATE INDEX [IX_FK_ORDERDIS_REFERENCE_ORDER]
+ON [OrderDishes]
+    ([ID_Order]);
+GO
+
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

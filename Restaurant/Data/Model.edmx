@@ -1,0 +1,597 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="RestaurantDBModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="RestaurantDBModelStoreContainer">
+    <EntitySet Name="Dishes" EntityType="RestaurantDBModel.Store.Dishes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DishIngredients" EntityType="RestaurantDBModel.Store.DishIngredients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Employees" EntityType="RestaurantDBModel.Store.Employees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ingredients" EntityType="RestaurantDBModel.Store.Ingredients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Orders" EntityType="RestaurantDBModel.Store.Orders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderDishes" EntityType="RestaurantDBModel.Store.OrderDishes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Posts" EntityType="RestaurantDBModel.Store.Posts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TypeDishes" EntityType="RestaurantDBModel.Store.TypeDishes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Units" EntityType="RestaurantDBModel.Store.Units" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_DISH_REFERENCE_TYPEDISH" Association="RestaurantDBModel.Store.FK_DISH_REFERENCE_TYPEDISH">
+      <End Role="TypeDish" EntitySet="TypeDishes" />
+      <End Role="Dish" EntitySet="Dishes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DISHINGR_REFERENCE_DISH" Association="RestaurantDBModel.Store.FK_DISHINGR_REFERENCE_DISH">
+      <End Role="Dish" EntitySet="Dishes" />
+      <End Role="DishIngredient" EntitySet="DishIngredients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERDIS_REFERENCE_DISH" Association="RestaurantDBModel.Store.FK_ORDERDIS_REFERENCE_DISH">
+      <End Role="Dish" EntitySet="Dishes" />
+      <End Role="OrderDish" EntitySet="OrderDishes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DISHINGR_REFERENCE_INGREDIE" Association="RestaurantDBModel.Store.FK_DISHINGR_REFERENCE_INGREDIE">
+      <End Role="Ingredient" EntitySet="Ingredients" />
+      <End Role="DishIngredient" EntitySet="DishIngredients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DISHINGR_REFERENCE_UNITS" Association="RestaurantDBModel.Store.FK_DISHINGR_REFERENCE_UNITS">
+      <End Role="Units" EntitySet="Units" />
+      <End Role="DishIngredient" EntitySet="DishIngredients" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLOYEE_REFERENCE_POST" Association="RestaurantDBModel.Store.FK_EMPLOYEE_REFERENCE_POST">
+      <End Role="Post" EntitySet="Posts" />
+      <End Role="Employee" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDER_REFERENCE_EMPLOYEE" Association="RestaurantDBModel.Store.FK_ORDER_REFERENCE_EMPLOYEE">
+      <End Role="Employee" EntitySet="Employees" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ORDERDIS_REFERENCE_ORDER" Association="RestaurantDBModel.Store.FK_ORDERDIS_REFERENCE_ORDER">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderDish" EntitySet="OrderDishes" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Dishes">
+    <Key>
+      <PropertyRef Name="ID_Dish" />
+    </Key>
+    <Property Name="ID_Dish" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_TypeDish" Type="int" Nullable="false" />
+    <Property Name="DishName" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Price" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Photo" Type="image" Nullable="false" />
+    <Property Name="Detail" Type="nvarchar" Nullable="true" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="DishIngredients">
+    <Key>
+      <PropertyRef Name="ID_IngridientDish" />
+    </Key>
+    <Property Name="ID_IngridientDish" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dish_ID" Type="int" Nullable="false" />
+    <Property Name="Ingridient_ID" Type="int" Nullable="false" />
+    <Property Name="ID_Unit" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Employees">
+    <Key>
+      <PropertyRef Name="ID_Employee" />
+    </Key>
+    <Property Name="ID_Employee" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_post" Type="int" Nullable="false" />
+    <Property Name="FName" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="EmpName" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="LName" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Phone" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Birthdate" Type="datetime" Nullable="false" />
+    <Property Name="Photo" Type="image" Nullable="false" />
+    <Property Name="DateEmployment" Type="datetime" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="Ingredients">
+    <Key>
+      <PropertyRef Name="ID_Ingredient" />
+    </Key>
+    <Property Name="ID_Ingredient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IngridientName" Type="nvarchar" Nullable="false" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="ID_Order" />
+    </Key>
+    <Property Name="ID_Order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_Employee" Type="int" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="Remarks" Type="nvarchar" Nullable="true" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="OrderDishes">
+    <Key>
+      <PropertyRef Name="ID_OrderDish" />
+    </Key>
+    <Property Name="ID_OrderDish" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dish_ID" Type="int" Nullable="false" />
+    <Property Name="ID_Order" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Posts">
+    <Key>
+      <PropertyRef Name="ID_post" />
+    </Key>
+    <Property Name="ID_post" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PostName" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Salary" Type="decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="SalePercent" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TypeDishes">
+    <Key>
+      <PropertyRef Name="ID_TypeDish" />
+    </Key>
+    <Property Name="ID_TypeDish" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TypeDishName" Type="nvarchar" Nullable="false" MaxLength="250" />
+    <Property Name="Detailed" Type="nvarchar" Nullable="true" MaxLength="2500" />
+  </EntityType>
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="ID_Unit" />
+    </Key>
+    <Property Name="ID_Unit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitName" Type="nvarchar" Nullable="false" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_DISH_REFERENCE_TYPEDISH">
+    <End Role="TypeDish" Type="RestaurantDBModel.Store.TypeDishes" Multiplicity="1" />
+    <End Role="Dish" Type="RestaurantDBModel.Store.Dishes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypeDish">
+        <PropertyRef Name="ID_TypeDish" />
+      </Principal>
+      <Dependent Role="Dish">
+        <PropertyRef Name="ID_TypeDish" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DISHINGR_REFERENCE_DISH">
+    <End Role="Dish" Type="RestaurantDBModel.Store.Dishes" Multiplicity="1" />
+    <End Role="DishIngredient" Type="RestaurantDBModel.Store.DishIngredients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dish">
+        <PropertyRef Name="ID_Dish" />
+      </Principal>
+      <Dependent Role="DishIngredient">
+        <PropertyRef Name="Dish_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERDIS_REFERENCE_DISH">
+    <End Role="Dish" Type="RestaurantDBModel.Store.Dishes" Multiplicity="1" />
+    <End Role="OrderDish" Type="RestaurantDBModel.Store.OrderDishes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dish">
+        <PropertyRef Name="ID_Dish" />
+      </Principal>
+      <Dependent Role="OrderDish">
+        <PropertyRef Name="Dish_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DISHINGR_REFERENCE_INGREDIE">
+    <End Role="Ingredient" Type="RestaurantDBModel.Store.Ingredients" Multiplicity="1" />
+    <End Role="DishIngredient" Type="RestaurantDBModel.Store.DishIngredients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ingredient">
+        <PropertyRef Name="ID_Ingredient" />
+      </Principal>
+      <Dependent Role="DishIngredient">
+        <PropertyRef Name="Ingridient_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DISHINGR_REFERENCE_UNITS">
+    <End Role="Units" Type="RestaurantDBModel.Store.Units" Multiplicity="1" />
+    <End Role="DishIngredient" Type="RestaurantDBModel.Store.DishIngredients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Units">
+        <PropertyRef Name="ID_Unit" />
+      </Principal>
+      <Dependent Role="DishIngredient">
+        <PropertyRef Name="ID_Unit" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLOYEE_REFERENCE_POST">
+    <End Role="Post" Type="RestaurantDBModel.Store.Posts" Multiplicity="1" />
+    <End Role="Employee" Type="RestaurantDBModel.Store.Employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Post">
+        <PropertyRef Name="ID_post" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="ID_post" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDER_REFERENCE_EMPLOYEE">
+    <End Role="Employee" Type="RestaurantDBModel.Store.Employees" Multiplicity="1" />
+    <End Role="Order" Type="RestaurantDBModel.Store.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="ID_Employee" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ID_Employee" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ORDERDIS_REFERENCE_ORDER">
+    <End Role="Order" Type="RestaurantDBModel.Store.Orders" Multiplicity="1" />
+    <End Role="OrderDish" Type="RestaurantDBModel.Store.OrderDishes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="ID_Order" />
+      </Principal>
+      <Dependent Role="OrderDish">
+        <PropertyRef Name="ID_Order" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RestaurantDBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="RestaurantDBEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Dishes" EntityType="RestaurantDBModel.Dish" />
+          <EntitySet Name="DishIngredients" EntityType="RestaurantDBModel.DishIngredient" />
+          <EntitySet Name="Employees" EntityType="RestaurantDBModel.Employee" />
+          <EntitySet Name="Ingredients" EntityType="RestaurantDBModel.Ingredient" />
+          <EntitySet Name="Orders" EntityType="RestaurantDBModel.Order" />
+          <EntitySet Name="OrderDishes" EntityType="RestaurantDBModel.OrderDish" />
+          <EntitySet Name="Posts" EntityType="RestaurantDBModel.Post" />
+          <EntitySet Name="TypeDishes" EntityType="RestaurantDBModel.TypeDish" />
+          <EntitySet Name="Units" EntityType="RestaurantDBModel.Unit" />
+          <AssociationSet Name="FK_DISH_REFERENCE_TYPEDISH" Association="RestaurantDBModel.FK_DISH_REFERENCE_TYPEDISH">
+            <End Role="TypeDish" EntitySet="TypeDishes" />
+            <End Role="Dish" EntitySet="Dishes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DISHINGR_REFERENCE_DISH" Association="RestaurantDBModel.FK_DISHINGR_REFERENCE_DISH">
+            <End Role="Dish" EntitySet="Dishes" />
+            <End Role="DishIngredient" EntitySet="DishIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDIS_REFERENCE_DISH" Association="RestaurantDBModel.FK_ORDERDIS_REFERENCE_DISH">
+            <End Role="Dish" EntitySet="Dishes" />
+            <End Role="OrderDish" EntitySet="OrderDishes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DISHINGR_REFERENCE_INGREDIE" Association="RestaurantDBModel.FK_DISHINGR_REFERENCE_INGREDIE">
+            <End Role="Ingredient" EntitySet="Ingredients" />
+            <End Role="DishIngredient" EntitySet="DishIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DISHINGR_REFERENCE_UNITS" Association="RestaurantDBModel.FK_DISHINGR_REFERENCE_UNITS">
+            <End Role="Units" EntitySet="Units" />
+            <End Role="DishIngredient" EntitySet="DishIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLOYEE_REFERENCE_POST" Association="RestaurantDBModel.FK_EMPLOYEE_REFERENCE_POST">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDER_REFERENCE_EMPLOYEE" Association="RestaurantDBModel.FK_ORDER_REFERENCE_EMPLOYEE">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ORDERDIS_REFERENCE_ORDER" Association="RestaurantDBModel.FK_ORDERDIS_REFERENCE_ORDER">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderDish" EntitySet="OrderDishes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Dish">
+          <Key>
+            <PropertyRef Name="ID_Dish" />
+          </Key>
+          <Property Name="ID_Dish" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_TypeDish" Type="Int32" Nullable="false" />
+          <Property Name="DishName" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Photo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="Detail" Type="String" MaxLength="2500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="TypeDish" Relationship="RestaurantDBModel.FK_DISH_REFERENCE_TYPEDISH" FromRole="Dish" ToRole="TypeDish" />
+          <NavigationProperty Name="DishIngredients" Relationship="RestaurantDBModel.FK_DISHINGR_REFERENCE_DISH" FromRole="Dish" ToRole="DishIngredient" />
+          <NavigationProperty Name="OrderDishes" Relationship="RestaurantDBModel.FK_ORDERDIS_REFERENCE_DISH" FromRole="Dish" ToRole="OrderDish" />
+        </EntityType>
+        <EntityType Name="DishIngredient">
+          <Key>
+            <PropertyRef Name="ID_IngridientDish" />
+          </Key>
+          <Property Name="ID_IngridientDish" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Dish_ID" Type="Int32" Nullable="false" />
+          <Property Name="Ingridient_ID" Type="Int32" Nullable="false" />
+          <Property Name="ID_Unit" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Dish" Relationship="RestaurantDBModel.FK_DISHINGR_REFERENCE_DISH" FromRole="DishIngredient" ToRole="Dish" />
+          <NavigationProperty Name="Ingredient" Relationship="RestaurantDBModel.FK_DISHINGR_REFERENCE_INGREDIE" FromRole="DishIngredient" ToRole="Ingredient" />
+          <NavigationProperty Name="Unit" Relationship="RestaurantDBModel.FK_DISHINGR_REFERENCE_UNITS" FromRole="DishIngredient" ToRole="Units" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID_Employee" />
+          </Key>
+          <Property Name="ID_Employee" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_post" Type="Int32" Nullable="false" />
+          <Property Name="FName" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="EmpName" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="LName" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Birthdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Photo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateEmployment" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Post" Relationship="RestaurantDBModel.FK_EMPLOYEE_REFERENCE_POST" FromRole="Employee" ToRole="Post" />
+          <NavigationProperty Name="Orders" Relationship="RestaurantDBModel.FK_ORDER_REFERENCE_EMPLOYEE" FromRole="Employee" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ID_Ingredient" />
+          </Key>
+          <Property Name="ID_Ingredient" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="IngridientName" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DishIngredients" Relationship="RestaurantDBModel.FK_DISHINGR_REFERENCE_INGREDIE" FromRole="Ingredient" ToRole="DishIngredient" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID_Order" />
+          </Key>
+          <Property Name="ID_Order" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_Employee" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="2500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Employee" Relationship="RestaurantDBModel.FK_ORDER_REFERENCE_EMPLOYEE" FromRole="Order" ToRole="Employee" />
+          <NavigationProperty Name="OrderDishes" Relationship="RestaurantDBModel.FK_ORDERDIS_REFERENCE_ORDER" FromRole="Order" ToRole="OrderDish" />
+        </EntityType>
+        <EntityType Name="OrderDish">
+          <Key>
+            <PropertyRef Name="ID_OrderDish" />
+          </Key>
+          <Property Name="ID_OrderDish" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Dish_ID" Type="Int32" Nullable="false" />
+          <Property Name="ID_Order" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Dish" Relationship="RestaurantDBModel.FK_ORDERDIS_REFERENCE_DISH" FromRole="OrderDish" ToRole="Dish" />
+          <NavigationProperty Name="Order" Relationship="RestaurantDBModel.FK_ORDERDIS_REFERENCE_ORDER" FromRole="OrderDish" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="ID_post" />
+          </Key>
+          <Property Name="ID_post" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="PostName" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Salary" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="SalePercent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="RestaurantDBModel.FK_EMPLOYEE_REFERENCE_POST" FromRole="Post" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="TypeDish">
+          <Key>
+            <PropertyRef Name="ID_TypeDish" />
+          </Key>
+          <Property Name="ID_TypeDish" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeDishName" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Detailed" Type="String" MaxLength="2500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Dishes" Relationship="RestaurantDBModel.FK_DISH_REFERENCE_TYPEDISH" FromRole="TypeDish" ToRole="Dish" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="ID_Unit" />
+          </Key>
+          <Property Name="ID_Unit" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="DishIngredients" Relationship="RestaurantDBModel.FK_DISHINGR_REFERENCE_UNITS" FromRole="Units" ToRole="DishIngredient" />
+        </EntityType>
+        <Association Name="FK_DISH_REFERENCE_TYPEDISH">
+          <End Role="TypeDish" Type="RestaurantDBModel.TypeDish" Multiplicity="1" />
+          <End Role="Dish" Type="RestaurantDBModel.Dish" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeDish">
+              <PropertyRef Name="ID_TypeDish" />
+            </Principal>
+            <Dependent Role="Dish">
+              <PropertyRef Name="ID_TypeDish" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DISHINGR_REFERENCE_DISH">
+          <End Role="Dish" Type="RestaurantDBModel.Dish" Multiplicity="1" />
+          <End Role="DishIngredient" Type="RestaurantDBModel.DishIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dish">
+              <PropertyRef Name="ID_Dish" />
+            </Principal>
+            <Dependent Role="DishIngredient">
+              <PropertyRef Name="Dish_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDIS_REFERENCE_DISH">
+          <End Role="Dish" Type="RestaurantDBModel.Dish" Multiplicity="1" />
+          <End Role="OrderDish" Type="RestaurantDBModel.OrderDish" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dish">
+              <PropertyRef Name="ID_Dish" />
+            </Principal>
+            <Dependent Role="OrderDish">
+              <PropertyRef Name="Dish_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DISHINGR_REFERENCE_INGREDIE">
+          <End Role="Ingredient" Type="RestaurantDBModel.Ingredient" Multiplicity="1" />
+          <End Role="DishIngredient" Type="RestaurantDBModel.DishIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredient">
+              <PropertyRef Name="ID_Ingredient" />
+            </Principal>
+            <Dependent Role="DishIngredient">
+              <PropertyRef Name="Ingridient_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DISHINGR_REFERENCE_UNITS">
+          <End Role="Units" Type="RestaurantDBModel.Unit" Multiplicity="1" />
+          <End Role="DishIngredient" Type="RestaurantDBModel.DishIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Units">
+              <PropertyRef Name="ID_Unit" />
+            </Principal>
+            <Dependent Role="DishIngredient">
+              <PropertyRef Name="ID_Unit" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLOYEE_REFERENCE_POST">
+          <End Role="Post" Type="RestaurantDBModel.Post" Multiplicity="1" />
+          <End Role="Employee" Type="RestaurantDBModel.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID_post" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="ID_post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDER_REFERENCE_EMPLOYEE">
+          <End Role="Employee" Type="RestaurantDBModel.Employee" Multiplicity="1" />
+          <End Role="Order" Type="RestaurantDBModel.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID_Employee" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ORDERDIS_REFERENCE_ORDER">
+          <End Role="Order" Type="RestaurantDBModel.Order" Multiplicity="1" />
+          <End Role="OrderDish" Type="RestaurantDBModel.OrderDish" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID_Order" />
+            </Principal>
+            <Dependent Role="OrderDish">
+              <PropertyRef Name="ID_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="RestaurantDBModelStoreContainer" CdmEntityContainer="RestaurantDBEntities">
+    <EntitySetMapping Name="Dishes">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Dish)">
+        <MappingFragment StoreEntitySet="Dishes">
+          <ScalarProperty Name="ID_Dish" ColumnName="ID_Dish" />
+          <ScalarProperty Name="ID_TypeDish" ColumnName="ID_TypeDish" />
+          <ScalarProperty Name="DishName" ColumnName="DishName" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="Detail" ColumnName="Detail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DishIngredients">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.DishIngredient)">
+        <MappingFragment StoreEntitySet="DishIngredients">
+          <ScalarProperty Name="ID_IngridientDish" ColumnName="ID_IngridientDish" />
+          <ScalarProperty Name="Dish_ID" ColumnName="Dish_ID" />
+          <ScalarProperty Name="Ingridient_ID" ColumnName="Ingridient_ID" />
+          <ScalarProperty Name="ID_Unit" ColumnName="ID_Unit" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Employee)">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="ID_Employee" ColumnName="ID_Employee" />
+          <ScalarProperty Name="ID_post" ColumnName="ID_post" />
+          <ScalarProperty Name="FName" ColumnName="FName" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="LName" ColumnName="LName" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="DateEmployment" ColumnName="DateEmployment" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ingredients">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Ingredient)">
+        <MappingFragment StoreEntitySet="Ingredients">
+          <ScalarProperty Name="ID_Ingredient" ColumnName="ID_Ingredient" />
+          <ScalarProperty Name="IngridientName" ColumnName="IngridientName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Order)">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+          <ScalarProperty Name="ID_Employee" ColumnName="ID_Employee" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDishes">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.OrderDish)">
+        <MappingFragment StoreEntitySet="OrderDishes">
+          <ScalarProperty Name="ID_OrderDish" ColumnName="ID_OrderDish" />
+          <ScalarProperty Name="Dish_ID" ColumnName="Dish_ID" />
+          <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Post)">
+        <MappingFragment StoreEntitySet="Posts">
+          <ScalarProperty Name="ID_post" ColumnName="ID_post" />
+          <ScalarProperty Name="PostName" ColumnName="PostName" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="SalePercent" ColumnName="SalePercent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypeDishes">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.TypeDish)">
+        <MappingFragment StoreEntitySet="TypeDishes">
+          <ScalarProperty Name="ID_TypeDish" ColumnName="ID_TypeDish" />
+          <ScalarProperty Name="TypeDishName" ColumnName="TypeDishName" />
+          <ScalarProperty Name="Detailed" ColumnName="Detailed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="IsTypeOf(RestaurantDBModel.Unit)">
+        <MappingFragment StoreEntitySet="Units">
+          <ScalarProperty Name="ID_Unit" ColumnName="ID_Unit" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

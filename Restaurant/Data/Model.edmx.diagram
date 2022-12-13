@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="00f85e017c53404cafc9e576b3aa4cc5" Name="Диаграмма1">
+        <EntityTypeShape EntityType="RestaurantDBModel.Dish" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.DishIngredient" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Employee" Width="1.5" PointX="3.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Ingredient" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Order" Width="1.5" PointX="6" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.OrderDish" Width="1.5" PointX="8.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Post" Width="1.5" PointX="1.5" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.TypeDish" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RestaurantDBModel.Unit" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="RestaurantDBModel.FK_DISH_REFERENCE_TYPEDISH" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantDBModel.FK_DISHINGR_REFERENCE_DISH" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantDBModel.FK_ORDERDIS_REFERENCE_DISH" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantDBModel.FK_DISHINGR_REFERENCE_INGREDIE" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantDBModel.FK_DISHINGR_REFERENCE_UNITS" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantDBModel.FK_EMPLOYEE_REFERENCE_POST" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantDBModel.FK_ORDER_REFERENCE_EMPLOYEE" ManuallyRouted="false" />
+        <AssociationConnector Association="RestaurantDBModel.FK_ORDERDIS_REFERENCE_ORDER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
